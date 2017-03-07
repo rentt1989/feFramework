@@ -18,6 +18,7 @@ var gulp = require('gulp');
     revCollector = require('gulp-rev-collector');
     useref = require('gulp-useref');
     gulpif = require('gulp-if');
+    gulpSequence = require('gulp-sequence');
 
 //启动服务
 gulp.task('default',['browserify','watch'],function(){
@@ -71,7 +72,7 @@ gulp.task('watch',function(){
 
 //打包js和css
 gulp.task('build:js',function(){
-    gulp.src('./index.html')
+    return gulp.src('./index.html')
     .pipe(useref())
     .pipe(gulpif('*.css',minifyCss()))
     .pipe(gulpif('*.css',rev()))
@@ -83,12 +84,16 @@ gulp.task('build:js',function(){
 });
 
 //打包html
-gulp.task('build:html',function(){
-    gulp.src('./views/*.html')
+gulp.task('build:index-html',function(){
+    return gulp.src('./views/*.html')
+    .pipe(replace('./views','/modules'))
     .pipe(minifyHtml())
     .pipe(gulp.dest('./dest/modules/'));
-    gulp.src('./dest/index.html')
+})
+gulp.task('build:module-html',function(){
+    return gulp.src(['./dest/index.html'])
     .pipe(replace('./views','./modules'))
+    .pipe(minifyHtml())
     .pipe(gulp.dest('./dest'));
 })
 
@@ -106,10 +111,11 @@ gulp.task('template', function () {
 
 //在html内打上版本号
 gulp.task('rev:html',function(){
-    gulp.src(['./rev/*.json','./dest/index.html'])
+    return gulp.src(['./rev/*.json','./dest/index.html'])
     .pipe(revCollector({
         replaceReved: true
     }))
     .pipe(gulp.dest('./dest/'))
 });
-
+//打包集合
+gulp.task('build',gulpSequence('build:clean','build:js','build:index-html','build:module-html','rev:html'));
