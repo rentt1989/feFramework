@@ -7,7 +7,7 @@ angular.module('app',
 		templateUrl:"../views/page1.html",
 		controller: "Page1Ctrl"
 	})
-	.when('/page1',{
+	.when('/page2',{
 		templateUrl:"../views/page2.html",
 		controller: "Page2Ctrl"
 	})
@@ -15,4 +15,9 @@ angular.module('app',
 		redirectTo: "/" 
 	})
 
+}])
+.run(['$rootScope','$location',function($rootScope,$location){
+	$rootScope.goTo = function(url){
+		$location.path(url);
+	}
 }])
