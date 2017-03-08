@@ -4,11 +4,11 @@ angular.module('app',
 .config(['$routeProvider',function ($routeProvider) {
 	$routeProvider
 	.when('/page1',{
-		templateUrl:"../views/page1.html",
+		templateUrl:"../src/views/page1.html",
 		controller: "Page1Ctrl"
 	})
 	.when('/page2',{
-		templateUrl:"../views/page2.html",
+		templateUrl:"../src/views/page2.html",
 		controller: "Page2Ctrl"
 	})
 	.otherwise({
