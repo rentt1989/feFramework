@@ -14,8 +14,8 @@ gulp.task('build:js', ['less', 'js', 'browserify'],function() {
         .pipe(gulpif('*.css', rev()))
         .pipe(gulpif('*.js', uglify()))
         .pipe(gulpif('*.js', rev()))
-        .pipe(replace('src/views', './modules'))
         .pipe(replace('../src/views','./modules'))
+        .pipe(replace('src/views', './modules'))
         .pipe(gulp.dest(path.dest_dir))
         .pipe(rev.manifest())
         .pipe(gulp.dest(path.dest_dir));
