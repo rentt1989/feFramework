@@ -23,7 +23,7 @@ gulp.task('build:js', ['less', 'js', 'browserify'],function() {
 //打包html
 gulp.task('build:module-html', function() {
     return gulp.src(path.views_dir+'/*.html')
-        .pipe(replace('src/views', '.'))
+        .pipe(replace('src/views', './modules'))
         .pipe(minifyHtml())
         .pipe(gulp.dest(path.dest_modules_dir));
 })
