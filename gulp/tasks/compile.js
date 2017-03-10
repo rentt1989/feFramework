@@ -15,7 +15,6 @@ var gulp = require('gulp');
     gulpSequence = require('gulp-sequence');
     path = require('../config.js');
     watch = require('gulp-watch');
-    batch = require('gulp-batch');
     
 
 //启动服务
