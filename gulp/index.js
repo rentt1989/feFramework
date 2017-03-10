@@ -10,4 +10,4 @@ var gulp = require('gulp');
 gulp.task('default',gulpSequence('browserify','watch','serve'));
 
 //打包
-gulp.task('build',gulpSequence('build:clean','build:js','build:module-html','build:img','revCollector'));
+gulp.task('build',gulpSequence('build:clean','build:js','build:module-html','build:img','revReplace','rev:clean','tmp:clean'));
