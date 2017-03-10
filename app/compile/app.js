@@ -12,7 +12,7 @@ angular.module('app',
 		controller: "Page2Ctrl"
 	})
 	.otherwise({
-		redirectTo: "/" 
+		redirectTo: "/page1" 
 	})
 
 }])
@@ -26,7 +26,7 @@ angular.module('app',
 'use strict';
 angular.module('app.controllers',[])
 .controller('MainController',['$scope',function($scope){
-	
+	$scope.data = {};
 }]);
 'use strict';
 angular.module('app.controllers')
@@ -36,5 +36,5 @@ angular.module('app.controllers')
 'use strict';
 angular.module('app.controllers')
 .controller('Page2Ctrl',['$scope',function($scope){
-
+	
 }]);

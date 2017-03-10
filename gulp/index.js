@@ -1,8 +1,8 @@
 //注意引用顺序
+
+require('require-dir')('./tasks');
+
 var gulp = require('gulp');
-require('./config.js');
-require('./compile.js');
-require('./build.js');
 
 
 
@@ -10,4 +10,4 @@ require('./build.js');
 gulp.task('default',gulpSequence('browserify','watch','serve'));
 
 //打包
-gulp.task('build',gulpSequence('build:clean','build:js','build:module-html','rev:html'));
+gulp.task('build',gulpSequence('build:clean','build:js','build:module-html','build:img','revCollector'));

@@ -12,7 +12,7 @@ angular.module('app',
 		controller: "Page2Ctrl"
 	})
 	.otherwise({
-		redirectTo: "/" 
+		redirectTo: "/page1" 
 	})
 
 }])

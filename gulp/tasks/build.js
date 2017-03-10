@@ -1,10 +1,11 @@
-var gulp = require('gulp');
-    path = require('./config.js');
-    useref = require('gulp-useref');
-    gulpif = require('gulp-if');
-    replace = require('gulp-replace');
-    del = require('del');
-    revCollector = require('gulp-rev-collector');
+var gulp = require('gulp'),
+    path = require('../config.js'),
+    useref = require('gulp-useref'),
+    gulpif = require('gulp-if'),
+    replace = require('gulp-replace'),
+    del = require('del'),
+    revCollector = require('gulp-rev-collector'),
+    imagemin = require('gulp-imagemin');
 
 //打包js和css
 gulp.task('build:js', ['less', 'js', 'browserify'],function() {
@@ -17,8 +18,8 @@ gulp.task('build:js', ['less', 'js', 'browserify'],function() {
         .pipe(replace('../src/views','./modules'))
         .pipe(replace('src/views', './modules'))
         .pipe(gulp.dest(path.dest_dir))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(path.dest_dir));
+        .pipe(rev.manifest({merge:true}))
+        .pipe(gulp.dest(path.rev_dir+'/js'));
 });
 
 //打包html
@@ -28,10 +29,21 @@ gulp.task('build:module-html', function() {
         .pipe(minifyHtml())
         .pipe(gulp.dest(path.dest_modules_dir));
 })
+//打包图片
+gulp.task('build:img',function(){
+    return gulp.src(path.img_dir+'/*.{png,jpg,gif,ico}')
+    .pipe(imagemin())
+    .pipe(rev())
+    .pipe(gulp.dest(path.dest_dir+'/img'))
+    .pipe(rev.manifest({
+        merge:true
+    }))
+    .pipe(gulp.dest(path.rev_dir+'/img'))
+})
 
 //在html内打上版本号
-gulp.task('rev:html', function() {
-    return gulp.src([path.dest_dir+'/rev-manifest.json', path.dest_dir+'/index.html'])
+gulp.task('revCollector', function() {
+    return gulp.src([path.dest_dir+'/**/rev-manifest.json', path.dest_dir+'**/*'])
         .pipe(revCollector({
             replaceReved: true
         }))

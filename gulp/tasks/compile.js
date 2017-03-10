@@ -13,7 +13,9 @@ var gulp = require('gulp');
     minifyHtml = require('gulp-htmlmin');
     // templateCache = require('gulp-angular-templatecache');
     gulpSequence = require('gulp-sequence');
-    path = require('./config.js');
+    path = require('../config.js');
+    watch = require('gulp-watch');
+    batch = require('gulp-batch');
     
 
 //启动服务
@@ -55,11 +57,19 @@ gulp.task("browserify", function () {
 //监控
 gulp.task('watch',function(){
     //监控css文件
-    gulp.watch([path.styles_dir + '/*.less'],['less']).on('change',browserSync.reload);
-    //监控js
-    gulp.watch([path.scripts_dir + '/**/*.js', path.broserify_dir+'/*.js'],['js']).on('change',browserSync.reload);
-    //监控html文件
-    gulp.watch([path.views_dir + '/*.html', path.app_dir+'/*.html']).on('change',browserSync.reload);
+    // gulp.watch([path.styles_dir + '/*.less'],['less']).on('change',browserSync.reload);
+    // //监控js
+    // gulp.watch([path.scripts_dir + '/**/*.js', path.broserify_dir+'/*.js'],['js']).on('change',browserSync.reload);
+    // //监控html文件
+    // gulp.watch([path.views_dir + '/*.html', path.app_dir+'/*.html']).on('change',browserSync.reload);
+    watch(path.styles_dir + '/*.less',function(){
+        gulp.start('less');
+        browserSync.reload();
+    });
+    watch(path.scripts_dir + '/**/*.js',function(){
+        gulp.start('js');
+        browserSync.reload();
+    });
 });
 //
 
